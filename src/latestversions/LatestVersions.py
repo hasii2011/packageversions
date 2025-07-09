@@ -70,11 +70,12 @@ class LatestVersions:
 
         self.logger.info(f'I am reporting you to the IRS')
 
-        if self._checkJQInstalled() is False:
+        if not self._checkJQInstalled():
             raise ClickException(f'{JQ_CMD} is not installed')
-        if self._checkCurlInstalled() is False:
+        if not self._checkCurlInstalled():
             raise ClickException(f'{CURL_CMD} not installed')
 
+        clickSEcho('Dependencies are present')
         if outputFileName is None:
             outputFileName = CLICK_STDOUT_INDICATOR
         with open_file(outputFileName, 'w') as outputFile:
@@ -99,7 +100,7 @@ class LatestVersions:
         Returns: `True` if the JSON processor is installed else `False`
         """
         platform: str = osPlatform(terse=True)
-        if platform.startswith(THE_GREAT_MAC_PLATFORM) is True:
+        if platform.startswith(THE_GREAT_MAC_PLATFORM):
             return self._checkInstallation(MAC_OS_JQ_PATH)
         else:
             return self._checkInstallation(NON_MAC_OS_LS_PATH)
@@ -160,4 +161,4 @@ def commandHandler(package_name: PackageNames, output_file: str):
 
 if __name__ == "__main__":
 
-    commandHandler(['--package-name', 'buildlackey', '--package-name', 'ogl'])
+    commandHandler(['--package-name', 'setuptools', '--package-name', 'twine'])
